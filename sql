@@ -2,20 +2,16 @@
 -- total revenue
 select sum(s.total::money) as tot_sales
 from sales s
--- ANS: $392,293,023.61
 ;
 -- population, how many counties
 select sum(c.population) as tot_population
 ,count(c.county) as num_of_county
 from counties c
---tot_population: 3,046,352, num_of_county: 99
 ;
 -- About our client
 select count(distinct p.vendor_name) as num_of_vendor
-, count(distinct p.item_description) as types_of_liquor
+, count(distinct p.item_description) as types_of_product
 from products p
--- num_of_vendor: 271
--- types_of_liquor: 7276
 ;
 -- how many products does each vendor provide, tot_sales
 select p.vendor_name
@@ -32,7 +28,7 @@ order by 4 desc
 ;
 -- double check the previous query
 select * from products as p
-where p.vendor_name = 'Jim Beam Brands'
+where p.vendor_name = 'product type A'
 -- has 925 rows of item_no
 ;
 -- Mkt size of each county, sum, pct_to_tot, acc_tot
@@ -69,7 +65,6 @@ order by 2 desc
 select sum(s.btl_price::numeric)- sum(p.bottle_price::numeric) as tot_profit
 from products p
 inner join sales s on p.item_no=s.item
--- 14653048.14
 ;
 select p.proof
 , sum(s.total) as tot_sales
